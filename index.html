@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Interview Prep</title>
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --background-color: #f8f9fa;
+      --text-color: #2c3e50;
+      --card-bg: #ffffff;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary-color);
+      margin-bottom: 3rem;
+      font-size: 2.5rem;
+    }
+
+    .category-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+      padding: 2rem;
+      transition: transform 0.2s ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-title {
+      color: var(--secondary-color);
+      margin-top: 0;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--secondary-color);
+      font-size: 1.5rem;
+    }
+
+    .questions-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .question-item {
+      padding: 1rem;
+      border-radius: 6px;
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+
+    .completed-cont {
+      background-color: rgb(142, 223, 122);
+    }
+
+    .question-item:hover {
+      background-color: rgba(52, 152, 219, 0.05);
+    }
+
+    .question-checkbox {
+      width: 20px;
+      height: 20px;
+      margin-right: 1rem;
+      accent-color: var(--secondary-color);
+      flex-shrink: 0;
+    }
+
+    .question-text {
+      flex-grow: 1;
+      margin: 0;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .category-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>JavaScript Interview Preparation</h1>
+    <div id="categoriesContainer"></div>
+  </div>
+
+  <script>
+    const categories = [
+      {
+        title: '📚 Core JavaScript – Theory (20+)',
+        startId: 1,
+        questions: [
+          'What are the different data types in JavaScript?',
+          'What is the difference between `var`, `let`, and `const`?',
+          'Explain hoisting in JavaScript.',
+          'What is the Temporal Dead Zone?',
+          'What is a closure? Give an example.',
+          'What is the difference between `==` and `===`?',
+          'Explain the concept of scope in JavaScript.',
+          'What is lexical scope?',
+          'What is the difference between function declaration and function expression?',
+          'What is a callback function?',
+          'What is a higher-order function?',
+          'What are arrow functions and how are they different from regular functions?',
+          'What are the different types of errors in JavaScript?',
+          'What is the event loop and how does it work?',
+          'What is the call stack?',
+          'What are promises and how are they used?',
+          'What are async/await in JavaScript?',
+          'What is the difference between synchronous and asynchronous code?',
+          'Explain `this` keyword and how it behaves in different contexts.',
+          'What is the prototype chain?'
+        ]
+      },
+      {
+        title: '⚙️ JavaScript Concepts – Advanced (20+)',
+        startId: 21,
+        questions: [
+          'What is the difference between deep and shallow copy?',
+          'What are JavaScript modules and how do `import` and `export` work?',
+          'What is a pure function?',
+          'What is immutability?',
+          'What is debounce and throttle? Implement both.',
+          'Explain currying in JavaScript.',
+          'What is memoization?',
+          'What is a generator function?',
+          'What is a Symbol in JavaScript?',
+          'What are WeakMap and WeakSet?',
+          'What is the difference between Map and Object?',
+          'What are Set and its use cases?',
+          'What is object destructuring?',
+          'What is optional chaining?',
+          'What is nullish coalescing operator `??`?',
+          'Explain event delegation.',
+          'What is bubbling and capturing in event handling?',
+          'What are service workers?',
+          'How does garbage collection work in JS?',
+          'Explain reflow and repaint in the browser.'
+        ]
+      },
+      {
+        title: "💻 JavaScript Practical/Code-Based (20+)",
+        startId: 41,
+        questions: [
+          "Implement a function to reverse a string.",
+          "Write a function to check for palindrome.",
+          "Flatten a deeply nested array.",
+          "Implement custom `bind` method.",
+          "Implement custom `call` and `apply`.",
+          "Implement a deep clone function.",
+          "Create a debounce function.",
+          "Create a throttle function.",
+          "Convert a string to camelCase.",
+          "Count the frequency of characters in a string.",
+          "Find the longest substring without repeating characters.",
+          "Group anagrams from an array of strings.",
+          "Implement your own `Promise.all`.",
+          "Write a sleep function using Promises.",
+          "Write a polyfill for `Array.prototype.map`.",
+          "How to check if an object is empty?",
+          "Create a function to shuffle an array.",
+          "Implement a simple pub-sub pattern.",
+          "Design a caching/memoization utility.",
+          "Write a function that limits the number of calls in a given time (rate limiter)."
+        ]
+      },
+      {
+        title: "🧠 Tricky & Common Interview Brain Teasers (10+)",
+        startId: 61,
+        questions: [
+          "What will the following code output? (with hoisting, closure, scoping)",
+          "What happens when you do `[1] + [1,2,3]`?",
+          "Difference between `setTimeout(..., 0)` and synchronous code?",
+          "What will `typeof NaN` return?",
+          "What is the output of `console.log(a)` where `a` is not defined?",
+          "What’s the difference between `Object.freeze` and `Object.seal`?",
+          "How to make a function only run once?",
+          "Why is `typeof null` equal to `'object'`?",
+          "What happens when you use `await` in a loop?",
+          "Can you use `await` outside an async function?"
+        ]
+      },
+      {
+        title: "🛠️ DOM, BOM, and Browser APIs (10+)",
+        startId: 71,
+        questions: [
+          "How to select elements in DOM?",
+          "How to create and append elements dynamically?",
+          "What is the difference between `innerHTML`, `innerText`, and `textContent`?",
+          "Explain localStorage, sessionStorage, and cookies.",
+          "What is CORS and how to handle it?",
+          "How to handle forms and form validation in JS?",
+          "What are the different ways to make HTTP requests in JS?",
+          "What is the Fetch API and how to use it?",
+          "What are web workers?",
+          "How does the browser parse and render HTML + JS?"
+        ]
+      },
+      {
+        title: "✅ Bonus / Miscellaneous (5+)",
+        startId: 81,
+        questions: [
+          "What are IIFEs and why are they used?",
+          "What is the use of `\"use strict\"`?",
+          "What is tail call optimization?",
+          "How do JavaScript engines optimize code?",
+          "How would you debug a performance issue in JavaScript?"
+        ]
+      },
+
+    ];
+
+    let state = JSON.parse(localStorage.getItem('questionsState')) || {};
+
+    function renderCategories() {
+      const container = document.getElementById('categoriesContainer');
+      container.innerHTML = '';
+
+      categories.forEach(category => {
+        const card = document.createElement('div');
+        card.className = 'category-card';
+
+        const title = document.createElement('h2');
+        title.className = 'category-title';
+        title.textContent = category.title;
+
+        const list = document.createElement('ul');
+        list.className = 'questions-list';
+
+        category.questions.forEach((question, index) => {
+          const id = category.startId + index;
+          const idStr = String(id);
+
+          const listItem = document.createElement('li');
+          listItem.className = 'question-item';
+
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.className = 'question-checkbox';
+          checkbox.checked = state[idStr] || false;
+
+          const questionText = document.createElement('span');
+          questionText.className = `question-text ${checkbox.checked ? 'completed' : ''}`;
+          questionText.textContent = `${id}. ${question}`;
+          listItem.className = checkbox.checked ? 'question-item completed-cont' : 'question-item';
+
+          checkbox.addEventListener('change', () => {
+            state[idStr] = checkbox.checked;
+            localStorage.setItem('questionsState', JSON.stringify(state));
+            questionText.classList.toggle('completed', checkbox.checked);
+            listItem.className = checkbox.checked ? 'question-item completed-cont' : 'question-item';
+          });
+
+          listItem.appendChild(checkbox);
+          listItem.appendChild(questionText);
+          list.appendChild(listItem);
+        });
+
+        card.appendChild(title);
+        card.appendChild(list);
+        container.appendChild(card);
+      });
+    }
+    renderCategories();
+  </script>
+</body>
+
+</html>
